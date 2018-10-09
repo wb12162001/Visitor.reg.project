@@ -1,0 +1,52 @@
+﻿@model WebApplication.Models.VisitViewModel
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">Visitor Modal</h4>
+</div>
+<div class="modal-body">
+    @using (@Ajax.BeginForm("ModalSubmit", "Visitor", null,
+        new AjaxOptions() {
+            HttpMethod = "Post",
+            OnSuccess = "formSuccess(data)"
+        }
+        ))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SiteName, new { @class = "control-label col-md-3" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.SiteName, new { @class = "form-control", placeholder = "Site Name" })
+                    @Html.ValidationMessageFor(m => m.SiteName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.VisitorName, new { @class = "control-label col-md-3" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.VisitorName, new { @class = "form-control", placeholder = "Visitor Name" })
+                    @Html.ValidationMessageFor(m => m.VisitorName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FromCompany, new { @class = "control-label col-md-3" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.FromCompany, new { @class = "form-control", placeholder = "From Company" })
+                    @Html.ValidationMessageFor(m => m.FromCompany, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    }
+</div>

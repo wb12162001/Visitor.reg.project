@@ -1,0 +1,97 @@
+﻿@using System.Linq.Expressions;
+@using Visitor.Reg.Entity.Models;
+@{
+    ViewBag.Title = "Visitor";
+    ViewBag.SubTitle = "";
+
+    List<string> letters = ViewBag.Letters as List<string>;
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Visitor/menu");
+}
+<div class="box">
+    @*<div class="box-header">
+            <h3 class="box-title">Users</h3>
+            <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    <div class="box-body table-responsive no-padding">
+        <div class="mailbox-controls">
+            @using (Ajax.BeginForm("Index", "Visitor",
+            new AjaxOptions
+            {
+                InsertionMode = InsertionMode.Replace,
+                HttpMethod = "GET",
+                OnBegin = "clearUser",
+                LoadingElementId = "ajax-loader",
+                UpdateTargetId = "userList",
+            }))
+            {
+                <input type="hidden" id="actUrl" value="@Url.Action("Index","Visitor")" />
+                <input type="hidden" id="modal_actUrl" value="@Url.Action("Modal","Visitor")" />
+                <button type="submit" data-value="ALL" class="btn btn-default btn-sm checkbox-toggle">
+                    ALL
+                </button>
+                <div class="btn-group">
+                    @foreach (var let in letters)
+                    {
+                        <button type="button" data-value="@let" class="btn let-btn btn-default btn-sm">@let</button>
+                    }
+                </div>
+
+                @*<div class="pull-right">
+                        <div class="box-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+            }
+        </div>
+        <img id="ajax-loader"
+             src="@Url.Content("~/Images/ajax-loader.gif")"
+             style="display:none" />
+        <div id="userList">
+            @Html.Partial("_UserList")
+        </div>
+    </div>
+
+    <div class="box-footer clearfix">
+
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @Html.Partial("_PartialModal")
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/AdminLTE/plugins/jquery-validate/js/jquery.validate.min.js"></script>
+    <script src="~/AdminLTE/plugins/jquery-validate/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/AdminLTE/plugins/jquery-unobtrusive/js/jquery.unobtrusive-ajax.min.js"></script>
+    @Scripts.Render("~/Scripts/Visitor/index");
+
+    <script type="text/javascript">
+
+        function formSuccess(result) {
+            console.log(result);
+        }
+
+        $(function () {
+            $.validator.unobtrusive.parse('form');
+        });
+    </script>
+}

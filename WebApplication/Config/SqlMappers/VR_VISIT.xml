@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="VR_VISIT" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <alias>
+        <typeAlias alias="VR_VISITModel" type="Visitor.Reg.Entity.Models.VR_VISITModel,Visitor.Reg.Entity"/>
+    </alias>
+    <resultMaps>
+        <resultMap id="SelectResult" class="Visitor.Reg.Entity.Models.VR_VISITModel">
+            <result property="ID" column="id" />
+            <result property="SiteName" column="sitename" />
+            <result property="VisitorName" column="visitorname" />
+            <result property="FromCompany" column="fromcompany" />
+            <result property="Host" column="host" />
+            <result property="BarCode" column="barcode" />
+            <result property="SignIn_DateTime" column="signin_datetime" />
+            <result property="SignOut_DateTime" column="signout_datetime" />
+            <result property="EMAIL_Status" column="email_status" />
+            <result property="OUT_Status" column="out_status" />
+        </resultMap>
+    </resultMaps>
+    <statements>
+        <select id="GetOneVR_VISIT" parameterClass="HashTable" resultClass="VR_VISITModel">
+            SELECT * FROM dbo.VR_VISIT WHERE ID=#ID#
+        </select>
+        <insert id="InsertVR_VISIT" parameterClass="HashTable">
+           Insert Into dbo.VR_VISIT (
+                  id,
+                  sitename,
+                  visitorname,
+                  fromcompany,
+                  host,
+                  barcode,
+                  signin_datetime,
+                  signout_datetime,
+                  email_status,
+                  out_status
+            )Values(
+                 #ID#,
+                 #SiteName#,
+                 #VisitorName#,
+                 #FromCompany#,
+                 #Host#,
+                 #BarCode#,
+                 #SignIn_DateTime#,
+                 #SignOut_DateTime#,
+                 #EMAIL_Status#,
+                 #OUT_Status#
+            )
+           <selectKey resultClass="int" type="post" keyProperty="ID">
+		    select @@IDENTITY as value
+           </selectKey>
+        </insert>
+        <delete id="DeleteVR_VISIT" parameterClass="int" restultClass="int">
+            DELETE FROM dbo.VR_VISIT WHERE ID=#ID#
+        </delete>
+        <update id="UpdateVR_VISIT" parameterClass="HashTable" restltClass="int">
+            update dbo.VR_VISIT set 
+                id=#ID#,
+                sitename=#SiteName#,
+                visitorname=#VisitorName#,
+                fromcompany=#FromCompany#,
+                host=#Host#,
+                barcode=#BarCode#,
+                signin_datetime=#SignIn_DateTime#,
+                signout_datetime=#SignOut_DateTime#,
+                email_status=#EMAIL_Status#,
+                out_status=#OUT_Status#
+            WHERE ID=#ID#
+        </update>
+        <select id="SelectAllVR_VISIT" parameterClass="HashTable" resultClass="VR_VISITModel">
+            SELECT * FROM dbo.VR_VISIT WHERE 1=1
+        </select>
+    </statements>
+</sqlMap>

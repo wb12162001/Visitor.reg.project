@@ -1,0 +1,42 @@
+﻿<sqlMap namespace="NgAccount" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <alias>
+    <typeAlias alias="UserModel" type="Visitor.Reg.Entity.Models.UserModel,Visitor.Reg.Entity"/>
+  </alias>
+  <statements>
+   
+
+    <select id="Loginsys"   resultClass="UserModel" parameterClass="HashTable">
+      SELECT [Id]
+      ,[LoginName]
+      ,[RealName]
+      ,[Email]
+      ,[Password]
+      ,[Status]
+      ,[CreateDateTime]
+      ,[IsDeleted]
+      FROM [dbo].[Users] WHERE LoginName=#loginName#
+    </select>
+
+
+    <select id="QueryUsersPaging"   resultClass="UserModel" parameterClass="HashTable">
+      <![CDATA[ $sql$ ]]>
+    </select>
+
+    <insert id="AddUsers"   parameterClass="HashTable">
+      <![CDATA[ $sql$ ]]>
+    </insert>
+    <update id="UpdateUsers"   parameterClass="HashTable">
+      <![CDATA[ $sql$ ]]>
+    </update>
+    <delete id="DeleteUsers" parameterclass="HashTable">
+      <![CDATA[ $sql$ ]]>
+    </delete>
+
+
+    <select id="GetOneUser"   resultClass="UserModel" parameterClass="HashTable">
+      SELECT * FROM dbo.Users WHERE Id=#id#
+    </select>
+
+    
+  </statements>
+</sqlMap>

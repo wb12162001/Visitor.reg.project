@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="TUSER" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <alias>
+        <typeAlias alias="TUSERModel" type="Visitor.Reg.Entity.Models.TUSERModel,Visitor.Reg.Entity"/>
+    </alias>
+    <resultMaps>
+        <resultMap id="SelectResult" class="Visitor.Reg.Entity.Models.TUSERModel">
+            <result property="USERID" column="userid" />
+            <result property="PASSID" column="passid" />
+            <result property="FULLNAME" column="fullname" />
+            <result property="DESCRIPTION" column="description" />
+            <result property="LOCATION" column="location" />
+            <result property="PHONE" column="phone" />
+            <result property="EXTNO" column="extno" />
+            <result property="CELLPHONE" column="cellphone" />
+            <result property="EMAIL" column="email" />
+            <result property="SHORTNAME" column="shortname" />
+            <result property="CLASS1" column="class1" />
+            <result property="CLASS2" column="class2" />
+            <result property="YammerId" column="yammerid" />
+        </resultMap>
+    </resultMaps>
+    <statements>
+        <select id="GetOneTUSER" parameterClass="HashTable" resultClass="TUSERModel">
+            SELECT * FROM dbo.TUSER WHERE USERID=#USERID#
+        </select>
+        <insert id="InsertTUSER" parameterClass="HashTable">
+           Insert Into dbo.TUSER (
+                  userid,
+                  passid,
+                  fullname,
+                  description,
+                  location,
+                  phone,
+                  extno,
+                  cellphone,
+                  email,
+                  shortname,
+                  class1,
+                  class2,
+                  yammerid
+            )Values(
+                 #USERID#,
+                 #PASSID#,
+                 #FULLNAME#,
+                 #DESCRIPTION#,
+                 #LOCATION#,
+                 #PHONE#,
+                 #EXTNO#,
+                 #CELLPHONE#,
+                 #EMAIL#,
+                 #SHORTNAME#,
+                 #CLASS1#,
+                 #CLASS2#,
+                 #YammerId#
+            )
+           <selectKey resultClass="int" type="post" keyProperty="USERID">
+		    select @@IDENTITY as value
+           </selectKey>
+        </insert>
+        <delete id="DeleteTUSER" parameterClass="int" restultClass="int">
+            DELETE FROM dbo.TUSER WHERE USERID=#USERID#
+        </delete>
+        <update id="UpdateTUSER" parameterClass="HashTable" restltClass="int">
+            update dbo.TUSER set 
+                userid=#USERID#,
+                passid=#PASSID#,
+                fullname=#FULLNAME#,
+                description=#DESCRIPTION#,
+                location=#LOCATION#,
+                phone=#PHONE#,
+                extno=#EXTNO#,
+                cellphone=#CELLPHONE#,
+                email=#EMAIL#,
+                shortname=#SHORTNAME#,
+                class1=#CLASS1#,
+                class2=#CLASS2#,
+                yammerid=#YammerId#
+            WHERE USERID=#USERID#
+        </update>
+        <select id="SelectAllTUSER" parameterClass="HashTable" resultClass="TUSERModel">
+            SELECT * FROM dbo.TUSER WHERE 1=1
+            <dynamic prepend="AND">
+                <isNotEmpty prepend="AND" property="Letter">  <!--当传入的参数Name不为""或Null时，才拼接该子句-->
+                  FULLNAME like #Letter#
+                </isNotEmpty>
+          </dynamic>
+        </select>
+    </statements>
+</sqlMap>

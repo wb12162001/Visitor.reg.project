@@ -1,0 +1,27 @@
+﻿@using Visitor.Reg.Entity.Models;
+@{
+
+    List<VR_VISITModel> list = ViewBag.logs as List<VR_VISITModel>;
+}
+<table class="table table-hover">
+    <tr>
+        <th>ID</th>
+        <th>Site</th>
+        <th>Visitor</th>
+        <th>From</th>
+        <th>Date</th>
+        <th>Status</th>
+    </tr>
+    @foreach (var log in list)
+    {
+    <tr>
+        <td>@log.ID</td>
+        <td>@log.SiteName</td>
+        <td>@log.VisitorName</td>
+        <td>@log.FromCompany</td>
+        <td>@log.SignIn_DateTime</td>
+        <td><span class="label label-success">Approved</span></td>
+    </tr>
+    }
+
+</table>

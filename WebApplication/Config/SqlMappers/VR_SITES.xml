@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="VR_SITES" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <alias>
+        <typeAlias alias="VR_SITESModel" type="Visitor.Reg.Entity.Models.VR_SITESModel,Visitor.Reg.Entity"/>
+    </alias>
+    <resultMaps>
+        <resultMap id="SelectResult" class="Visitor.Reg.Entity.Models.VR_SITESModel">
+            <result property="USERID" column="userid" />
+            <result property="PASSID" column="passid" />
+            <result property="LOCATION" column="location" />
+            <result property="ADDRESS" column="address" />
+            <result property="ADMIN_EMAIL" column="admin_email" />
+        </resultMap>
+    </resultMaps>
+    <statements>
+        <select id="GetOneVR_SITES" parameterClass="HashTable" resultClass="VR_SITESModel">
+            SELECT * FROM dbo.VR_SITES WHERE USERID=#USERID#
+        </select>
+        <insert id="InsertVR_SITES" parameterClass="HashTable">
+           Insert Into dbo.VR_SITES (
+                  userid,
+                  passid,
+                  location,
+                  address,
+                  admin_email
+            )Values(
+                 #USERID#,
+                 #PASSID#,
+                 #LOCATION#,
+                 #ADDRESS#,
+                 #ADMIN_EMAIL#
+            )
+           <selectKey resultClass="int" type="post" keyProperty="USERID">
+		    select @@IDENTITY as value
+           </selectKey>
+        </insert>
+        <delete id="DeleteVR_SITES" parameterClass="int" restultClass="int">
+            DELETE FROM dbo.VR_SITES WHERE USERID=#USERID#
+        </delete>
+        <update id="UpdateVR_SITES" parameterClass="HashTable" restltClass="int">
+            update dbo.VR_SITES set 
+                userid=#USERID#,
+                passid=#PASSID#,
+                location=#LOCATION#,
+                address=#ADDRESS#,
+                admin_email=#ADMIN_EMAIL#
+            WHERE USERID=#USERID#
+        </update>
+        <select id="SelectAllVR_SITES" parameterClass="HashTable" resultClass="VR_SITESModel">
+            SELECT * FROM dbo.VR_SITES WHERE 1=1
+            <dynamic prepend="AND">
+                <isLessEqual prepend="AND" property="Id" compareValue="3">  <!--当传入的参数Id小于3时，才拼接该子句-->
+                  Id = #Id#
+                </isLessEqual>
+                <isNotEmpty prepend="AND" property="Name">  <!--当传入的参数Name不为""或Null时，才拼接该子句-->
+                  Name = #Name#
+                </isNotEmpty>
+          </dynamic>
+        </select>
+    </statements>
+</sqlMap>
